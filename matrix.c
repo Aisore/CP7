@@ -98,47 +98,35 @@ void matrix_external(Matrix *tmp)
 	}
 }
 
-/* Определить максимальный по модулю 
-элемент матрицы и разделить на него все элементы строки,
-в которой он находится. Если таких элементов несколько, 
-обработать каждую строку, содержащую такой элемент *-
-
-int column_max(Node* matrix, complex max)
+double find_max_divine(Node *tmp, double max) 
 {
-	
-	int column_max_number = 0;
-	while (matrix) {
-		if ((matrix->columns_id) && (equal(matrix->value, max)) && ((matrix->columns_id) > column_max_number)) {
-			column_max_number = matrix->columns_id;
-		}
-		matrix = matrix->next;
+	if (!tmp->next) return max;
+	data_type curr_val = tmp->value;
+	if (creal(curr_val) >= max) {
+		max = creal(curr_val);
 	}
-	return column_max_number;
-
+	find_max_divine(tmp->next, max);
 }
 
-complex element_max_find(Node *matrix)
-{	
-	complex max = 0;
-	while(matrix) {
-		if ((complex_abs(matrix->value) > complex_abs(max)) && (matrix->columns_id)) {
-			max = matrix->value;
+int divine(Node *tmp, double max, int n)
+{
+	while (tmp->next) {
+		data_type curr_val = tmp->value;
+		if (creal(curr_val) == max) {
+			return lambda_j(tmp->lambda, n);
 		}
-		matrix = matrix->next;
-	}		
-	return(max);
+		tmp = tmp->next;
+	}
+	return -1;
 }
 
-struct matrix{					     typedef struct Node {             	       
-	int n,m;                             int columns_id;
-	Node *first;                         int value;    
-	Node *last;                          struct Node *next;     
-};                                   } Node;             
+void find_node_divine(Node* tmp, int i, int j, int n, double max)
+{
+	do {
+     	if(tmp->lambda == get_lambda(n, i, j)) { 
+    	   	tmp->value = creal(tmp->value) / max + cimag(tmp->value)*I;
+   	 	}
+   		tmp = tmp->next;
+	} while (tmp->next);
+} 
 
-struct matrix_node{
-	data_type value;
-	int lambda;
-	Node *next;
-	Node *prev;
-};
-*/

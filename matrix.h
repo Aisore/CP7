@@ -30,5 +30,8 @@ void matrix_push(Matrix *matrix, data_type value, int lambda);
 Node *node_create(void);
 void matrix_internal(Node *tmp);
 void matrix_external(Matrix *tmp);
+double find_max_divine(Node *tmp, double max);
+int divine(Node *tmp, double max, int n);
+void find_node_divine(Node* tmp, int i, int j, int n, double max);
 
 #endif

@@ -5,8 +5,8 @@
 
 int main(void)
 {
-    int n, m;
-    double x = 0.0, y = 0.0;
+    int n, m, line;
+    double x = 0.0, y = 0.0, max_num;
     data_type data, a, b, c;
 
 
@@ -30,6 +30,18 @@ int main(void)
     matrix_internal(matrix->first);
     printf("Matrix external performance\n");
     matrix_external(matrix);
+    printf("Matrix after transformation\n");
+    max_num = find_max_divine(matrix->first, 0);
+    for (int i = 0; i <= n; i++) {    
+        line = divine(matrix->first, max_num, n);
+        if (line != -1) {    
+            for (int j = 0; j <= m; j++) {
+                find_node_divine(matrix->first, j, line + 1, n, max_num);
+            }
+        }
+    } 
+    matrix_external(matrix);
+
 
     free(matrix->first);
     free(matrix->last);
